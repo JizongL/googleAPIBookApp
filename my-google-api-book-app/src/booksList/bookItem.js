@@ -7,15 +7,29 @@ class BookItem extends React.Component{
     this.setState({expand:true})
   }
 
+  collapseHandle=()=>{
+    this.setState({expand:false})
+  }
+
 render()
 {  const price = (this.props.bookdata.saleInfo.retailPrice)?
   <div className='book-price'>price: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'})
   .format(this.props.bookdata.saleInfo.retailPrice.amount)}</div>:<div>price not available</div>
   const bookcover = (this.props.bookdata.volumeInfo.imageLinks)? <img alt ='bookcover' src={this.props.bookdata.volumeInfo.imageLinks.thumbnail }/>:
   <span>front cover is not available</span>
-  const description = (this.props.bookdata.volumeInfo.description)? <div className='book-description'>{this.props.bookdata.volumeInfo.description.slice(0,300)}<button onClick={()=>this.expandHandle()}id='expand' type='click'>View Details</button></div>:
-  (this.state.expand)?<div className='book-description'>{this.props.bookdata.volumeInfo.description}<button onClick={()=>this.expandHandle()}id='collapse' type='submit'>Collapse</button></div>:<p>No description available</p>
-  console.log('test state',this.state.expand)
+  // const description = (this.props.bookdata.volumeInfo.description)? <div className='book-description'>{this.props.bookdata.volumeInfo.description.slice(0,300)}<button onClick={()=>this.expandHandle()}id='expand' type='click'>View Details</button></div>:
+  // (this.state.expand)?<div className='book-description'>{this.props.bookdata.volumeInfo.description}<button onClick={()=>this.expandHandle()}id='collapse' type='submit'>Collapse</button></div>:<p>No description available</p>
+  // console.log('test state',this.state.expand)
+  let description = ''
+  if(this.props.bookdata.volumeInfo.description){
+    if(this.state.expand){
+      description = <div className='book-description'>{this.props.bookdata.volumeInfo.description}<button onClick={()=>this.collapseHandle()}id='collapse' type='submit'>Collapse</button></div>
+    }else{
+      description=  <div className='book-description'>{this.props.bookdata.volumeInfo.description.slice(0,300)}<button onClick={()=>this.expandHandle()}id='collapse' type='submit'>View More</button></div>
+    }
+
+  }
+
   return(
     <li className='book-item'>
     <div className='book-item-container'>
