@@ -8,7 +8,8 @@ class BookToolBar extends React.Component{
       <div className='book-tool-bar'>
         <BookSearchTool searchHandle = {this.props.searchHandle}
         />
-        <FilterTool printTypeHandle={this.props.printTypeHandle}/>      
+        <FilterTool printTypeHandle={this.props.printTypeHandle}
+        bookTypeHandle={this.props.bookTypeHandle}/>      
       </div>
     )
   }

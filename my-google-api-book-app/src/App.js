@@ -11,7 +11,7 @@ class App extends Component {
     this.state = {
       bookList:[],
       searchTerm:'',
-      printType:'',
+      printType:'all',
       bookType:'books',
       error:'',
       loading:false
@@ -57,8 +57,8 @@ class App extends Component {
 doFetch(){
     
   
-  
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=${this.state.printType}`
+    
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=${this.state.printType}&${this.state.bookType}`
     
     fetch(url)
     .then(res=>{if(!res.ok){
@@ -77,11 +77,11 @@ doFetch(){
         bookList:data.items,
         error:null,
         loading:false
-      },console.log(this.state.bookList,'test inside setstate of searchhandle'))
+      })
       
     }
   ).catch(err=>{
-    console.log('error testing final',err)
+    console.log('error testing in catch',err)
     this.setState({
       error:err
       })
@@ -101,21 +101,31 @@ searchTermHandle=(e)=>{
 
 printTypeFilterHandle=(e)=>{
   e.preventDefault()
-  console.log('test event current target',e.currentTarget.value)
+  //console.log('test event current target',e.currentTarget.value)
   this.setState({
     printType:e.currentTarget.value
   },()=>this.doFetch())
 }
+
+bookTypeFilterHandle=(e)=>{
+  e.preventDefault()
+  //console.log('test booktype target',e.currentTarget.value)
+  this.setState({
+    bookType:e.currentTarget.value
+  },()=>this.doFetch())
+}
   render() {
-    console.log(this.state.bookList,'test booklist')
+    console.log(this.state.error,'test error final')
     const error = (this.state.error)?<span>{this.state.error}</span>:(this.state.loading)?
-    <span>Loading...</span>:<span></span>
+    <span>Loading...</span>:<BookList books = {this.state.bookList}/>
     return (
       <div className="App">
         <BookToolBar 
         searchHandle={this.searchTermHandle}
-        printTypeHandle={this.printTypeFilterHandle}/>
-        <BookList books = {this.state.bookList}/>
+        printTypeHandle={this.printTypeFilterHandle}
+        bookTypeHandle = {this.bookTypeFilterHandle}
+        />
+        
         {error}
       </div>
     );

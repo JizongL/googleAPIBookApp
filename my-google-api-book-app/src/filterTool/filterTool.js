@@ -6,7 +6,7 @@ render(){
   return(
     <div className='filter-tools'>
       <PrintType printTypeHandle={this.props.printTypeHandle}/>
-      <BookType />
+      <BookType bookTypeHandle={this.props.bookTypeHandle}/>
 
     </div>
   )
