@@ -1,7 +1,7 @@
 .book-item-container{
   display:flex;
   flex-direction: row;
-
+  margin-top:25px;
 }
 
 .book-cover{
@@ -12,4 +12,22 @@
 
 li{
   list-style-type:none;
+}
+
+#view-more{
+  color:blue;
+  margin-left: 5px;
+}
+
+#view-less{
+  color:blue;
+  margin-left: 5px;
+}
+
+.book-description{
+  margin:2em;
+}
+
+.book-author{
+  margin-bottom: 5px;
 }

@@ -23,9 +23,9 @@ render()
   let description = ''
   if(this.props.bookdata.volumeInfo.description){
     if(this.state.expand){
-      description = <div className='book-description'>{this.props.bookdata.volumeInfo.description}<button onClick={()=>this.collapseHandle()}id='collapse' type='submit'>Collapse</button></div>
+      description = <div className='book-description'>{this.props.bookdata.volumeInfo.description}<strong onClick={()=>this.collapseHandle()}id='view-less' type='submit'>Show Less</strong></div>
     }else{
-      description=  <div className='book-description'>{this.props.bookdata.volumeInfo.description.slice(0,300)}<button onClick={()=>this.expandHandle()}id='collapse' type='submit'>View More</button></div>
+      description=  <div className='book-description'>{this.props.bookdata.volumeInfo.description.slice(0,300)}<strong onClick={()=>this.expandHandle()}id='view-more' type='submit'>Show More</strong></div>
     }
 
   }
