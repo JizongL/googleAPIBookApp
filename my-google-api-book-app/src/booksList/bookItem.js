@@ -7,10 +7,12 @@ const BookItem = function(props){
   const price = (props.bookdata.saleInfo.retailPrice)?
   <div className='book-price'>price: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'})
   .format(props.bookdata.saleInfo.retailPrice.amount)}</div>:<div>price not available</div>
+  const bookcover = (props.bookdata.volumeInfo.imageLinks)? <img alt ='bookcover' src={props.bookdata.volumeInfo.imageLinks.thumbnail }/>:
+  <span>front cover is not available</span>
   return(
     <li>
       <div className='book-cover'>
-        <img alt ='bookcover' src={props.bookdata.volumeInfo.imageLinks.thumbnail }/>
+       {bookcover}
       </div>
       <div>
       <h3 className='book-title'> {props.bookdata.volumeInfo.title}</h3>

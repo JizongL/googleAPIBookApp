@@ -13,48 +13,100 @@ class App extends Component {
       searchTerm:'',
       printType:'',
       bookType:'',
-      error:''
+      error:'',
+      loading:false
     }
   }
 
-
+  
 
   componentDidMount(){
-    const url = 'https://www.googleapis.com/books/v1/volumes?q=tim:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=books'
-    
+    this.setState({loading:true})
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=books`
+    console.log(url,'test url')
     fetch(url)
     .then(res=>{if(!res.ok){
       
-      res.json().then(resError=>{
+     return res.json().then(resError=>{
         let error = resError.error.message
-        console.log(error,'dd')
-        this.setState({
-          error:error
-          })})
+       return Promise.reject(error)
+        })
     }
     return res.json()
   })
   .then(
     data =>{
-      console.log(data.items,'test data')
+      
       this.setState({
         bookList:data.items,
-        error:null
+        error:null,
+        loading:false
       })
     }
   ).catch(err=>{
-    console.log('error testing final',err.message)
+    console.log('error testing final',err)
+    this.setState({
+      error:err,
+      loading:false
+      })
     
 })
-  }
+  
+}
 
+doFetch(){
+  
+  
+  
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=books`
+    
+    fetch(url)
+    .then(res=>{if(!res.ok){
+      
+      return res.json().then(resError=>{
+        let error = resError.error.message
+        return Promise.reject(error)
+        })
+    }
+    return res.json()
+  })
+  .then(
+    data =>{
+      
+      this.setState({
+        bookList:data.items,
+        error:null,
+        loading:false
+      },console.log(this.state.bookList,'test inside setstate of searchhandle'))
+      
+    }
+  ).catch(err=>{
+    console.log('error testing final',err)
+    this.setState({
+      error:err
+      })
+    
+})
+}
+
+searchTermHandle=(e)=>{
+  e.preventDefault()
+  this.setState({
+    searchTerm:e.target['search-tool'].value
+    
+  },()=>this.doFetch(this.state.searchTerm))
+  
+  
+}
   render() {
-    console.log(this.state.bookList,'test state')
+    console.log(this.state.bookList,'test booklist')
+    const error = (this.state.error)?<span>{this.state.error}</span>:(this.state.loading)?
+    <span>Loading...</span>:<span></span>
     return (
       <div className="App">
-        <BookToolBar />
+        <BookToolBar searchHandle={this.searchTermHandle}/>
         <BookList books = {this.state.bookList}/>
-        <span>{this.state.error}</span>
+        {error}
       </div>
     );
   }

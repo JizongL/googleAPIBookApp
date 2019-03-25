@@ -6,7 +6,7 @@ class BookToolBar extends React.Component{
   render(){
     return(
       <div className='book-tool-bar'>
-        <BookSearchTool/>
+        <BookSearchTool searchHandle = {this.props.searchHandle}/>
         <FilterTool />      
       </div>
     )
