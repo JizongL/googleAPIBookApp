@@ -1,27 +1,36 @@
 import React from 'react'
+import './bookList.css'
+class BookItem extends React.Component{
 
-const BookItem = function(props){
-  //console.log((props.bookdata.saleInfo.retailPrice.amount))
-  
-  console.log((props.bookdata.saleInfo.retailPrice===undefined))
-  const price = (props.bookdata.saleInfo.retailPrice)?
+  state={expand:false}
+   expandHandle=()=>{
+    this.setState({expand:true})
+  }
+
+render()
+{  const price = (this.props.bookdata.saleInfo.retailPrice)?
   <div className='book-price'>price: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'})
-  .format(props.bookdata.saleInfo.retailPrice.amount)}</div>:<div>price not available</div>
-  const bookcover = (props.bookdata.volumeInfo.imageLinks)? <img alt ='bookcover' src={props.bookdata.volumeInfo.imageLinks.thumbnail }/>:
+  .format(this.props.bookdata.saleInfo.retailPrice.amount)}</div>:<div>price not available</div>
+  const bookcover = (this.props.bookdata.volumeInfo.imageLinks)? <img alt ='bookcover' src={this.props.bookdata.volumeInfo.imageLinks.thumbnail }/>:
   <span>front cover is not available</span>
+  const description = (this.props.bookdata.volumeInfo.description)? <div className='book-description'>{this.props.bookdata.volumeInfo.description.slice(0,300)}<button onClick={()=>this.expandHandle()}id='expand' type='click'>View Details</button></div>:
+  (this.state.expand)?<div className='book-description'>{this.props.bookdata.volumeInfo.description}<button onClick={()=>this.expandHandle()}id='collapse' type='submit'>Collapse</button></div>:<p>No description available</p>
+  console.log('test state',this.state.expand)
   return(
-    <li>
+    <li className='book-item'>
+    <div className='book-item-container'>
       <div className='book-cover'>
        {bookcover}
       </div>
       <div>
-      <h3 className='book-title'> {props.bookdata.volumeInfo.title}</h3>
-      <div className='book-author'>{props.bookdata.volumeInfo.authors}</div>
+      <h3 className='book-title'> {this.props.bookdata.volumeInfo.title}</h3>
+      <div className='book-author'>Author: {this.props.bookdata.volumeInfo.authors}</div>
       {price}
-      <div className='book-description'>{props.bookdata.volumeInfo.description}</div>
+      {description}
+      </div>
       </div>
     </li>
-  )
+  )}
 }
 
 export default BookItem

@@ -1,0 +1,15 @@
+.book-item-container{
+  display:flex;
+  flex-direction: row;
+
+}
+
+.book-cover{
+  display:flex;
+  align-items: center;
+  width:20%;
+}
+
+li{
+  list-style-type:none;
+}
