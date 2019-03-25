@@ -12,7 +12,7 @@ class App extends Component {
       bookList:[],
       searchTerm:'',
       printType:'',
-      bookType:'',
+      bookType:'books',
       error:'',
       loading:false
     }
@@ -22,7 +22,7 @@ class App extends Component {
 
   componentDidMount(){
     this.setState({loading:true})
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=books`
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=${this.state.bookType}`
     console.log(url,'test url')
     fetch(url)
     .then(res=>{if(!res.ok){
@@ -55,10 +55,10 @@ class App extends Component {
 }
 
 doFetch(){
+    
   
   
-  
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=books`
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${this.state.searchTerm}:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=${this.state.printType}`
     
     fetch(url)
     .then(res=>{if(!res.ok){
@@ -94,9 +94,17 @@ searchTermHandle=(e)=>{
   this.setState({
     searchTerm:e.target['search-tool'].value
     
-  },()=>this.doFetch(this.state.searchTerm))
+  },()=>this.doFetch())
   
   
+}
+
+printTypeFilterHandle=(e)=>{
+  e.preventDefault()
+  console.log('test event current target',e.currentTarget.value)
+  this.setState({
+    printType:e.currentTarget.value
+  },()=>this.doFetch())
 }
   render() {
     console.log(this.state.bookList,'test booklist')
@@ -104,7 +112,9 @@ searchTermHandle=(e)=>{
     <span>Loading...</span>:<span></span>
     return (
       <div className="App">
-        <BookToolBar searchHandle={this.searchTermHandle}/>
+        <BookToolBar 
+        searchHandle={this.searchTermHandle}
+        printTypeHandle={this.printTypeFilterHandle}/>
         <BookList books = {this.state.bookList}/>
         {error}
       </div>

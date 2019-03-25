@@ -5,7 +5,7 @@ class FilterTool extends React.Component{
 render(){
   return(
     <div className='filter-tools'>
-      <PrintType />
+      <PrintType printTypeHandle={this.props.printTypeHandle}/>
       <BookType />
 
     </div>
