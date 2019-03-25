@@ -1,6 +1,8 @@
 import React from 'react'
 import PrintType from './printType'
 import BookType from './bookType'
+import './filterTool.css'
+
 class FilterTool extends React.Component{
 render(){
   return(

@@ -120,6 +120,9 @@ bookTypeFilterHandle=(e)=>{
     <span>Loading...</span>:<BookList books = {this.state.bookList}/>
     return (
       <div className="App">
+        <header>
+          <h1>Gogle Book Search</h1>
+        </header>
         <BookToolBar 
         searchHandle={this.searchTermHandle}
         printTypeHandle={this.printTypeFilterHandle}

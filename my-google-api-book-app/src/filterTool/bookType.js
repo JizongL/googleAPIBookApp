@@ -1,10 +1,10 @@
 import React from 'react'
-
+import './filterTool.css'
 function BookType(props){
   return(
-    <div>
-      <form>
-      <label>Book Type:
+    <div className='book-type'>
+      <form className='book-type-form'>
+      <label>Book Type: 
       <select 
       id='book-type'
       name='book-type'

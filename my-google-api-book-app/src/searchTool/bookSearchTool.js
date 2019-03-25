@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './bookSearchTool.css'
 class BookSearchTool extends React.Component{
   constructor(props){
     super(props)
@@ -16,7 +16,7 @@ class BookSearchTool extends React.Component{
     return(
       <div className='search-tool'>
         <form onSubmit={e=>this.props.searchHandle(e)} className='search-book-form'>
-          <label htmlFor='search'>Search:  
+          <label htmlFor='search'>Search:    
           <input 
           type='text'
           ref='searc' 

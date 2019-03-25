@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './filterTool.css'
 function PrintType(props){
   // let value=''
   // let onChange=(e)=>{
