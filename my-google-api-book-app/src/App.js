@@ -20,32 +20,41 @@ class App extends Component {
 
 
   componentDidMount(){
-    const url = 'https://www.googleapis.com/books/v1/volumes?q=time:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=magazines'
+    const url = 'https://www.googleapis.com/books/v1/volumes?q=tim:keyes&key=AIzaSyAUoZApaq9eRmbV9OaTTHFzrLSoeXCDbsA&printType=books'
     
     fetch(url)
     .then(res=>{if(!res.ok){
-      throw new Error(res.statusText)
+      
+      res.json().then(resError=>{
+        let error = resError.error.message
+        console.log(error,'dd')
+        this.setState({
+          error:error
+          })})
     }
     return res.json()
   })
   .then(
     data =>{
+      console.log(data.items,'test data')
       this.setState({
-        bookmarks:data,
+        bookList:data.items,
         error:null
       })
     }
-  ).catch(err=>this.setState({
-    error:err.message
-  }))
+  ).catch(err=>{
+    console.log('error testing final',err.message)
+    
+})
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state.bookList,'test state')
     return (
       <div className="App">
         <BookToolBar />
-        <BookList />
+        <BookList books = {this.state.bookList}/>
+        <span>{this.state.error}</span>
       </div>
     );
   }
